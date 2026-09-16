@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         Primary SEO
+         ===================================================== -->
+
+    <title>QUOTELY | Discover, Save & Share Quotes</title>
+
+    <meta name="description"
+        content="Discover quotes by category, keep meaningful thoughts, save your favorites and create beautiful quote images with QUOTELY.">
+
+    <meta name="author" content="Abbas Bhojani">
+
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+
+    <!-- Replace with the final production URL before launch -->
+
+    <link rel="canonical" href="https://quotely.abbasbhojani.com/">
+
+
+    <!-- =====================================================
+         Open Graph
+         ===================================================== -->
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:site_name" content="QUOTELY">
+
+    <meta property="og:title" content="QUOTELY | Discover, Save & Share Quotes">
+
+    <meta property="og:description"
+        content="Discover thoughts worth keeping. Explore quotes, save meaningful ones and create purpose-built QUOTELY images for sharing.">
+
+    <meta property="og:url" content="https://quotely.abbasbhojani.com/">
+
+
+    <!-- =====================================================
+         Social Sharing
+         ===================================================== -->
+
+    <meta name="twitter:card" content="summary">
+
+    <meta name="twitter:title" content="QUOTELY | Discover, Save & Share Quotes">
+
+    <meta name="twitter:description"
+        content="Discover thoughts worth keeping. Explore, save and share meaningful quotes with QUOTELY.">
+
+
+    <!-- =====================================================
+         Favicon
+         ===================================================== -->
+
+    <link rel="icon" href="./assets/icons/favicon.png" sizes="any">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon.png">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/icons/favicon.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/favicon.png">
+
+
+    <!-- =====================================================
+         Appearance
+         ===================================================== -->
+
+    <meta name="theme-color" content="#f2f6f8">
+
+
+    <!-- =====================================================
+         Styles
+         ===================================================== -->
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         Site Header
+         ===================================================== -->
+
+    <header class="site-header">
+
+        <div class="site-header__top">
+
+            <div class="site-header__brand">
+
+                <a href="./index.html" class="site-header__brand-link">
+
+                    <span class="site-header__name">
+                        QUOTELY
+                    </span>
+
+                    <span class="site-header__tagline">
+                        THOUGHTS WORTH KEEPING
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <div class="site-header__edition" aria-label="Publication edition">
+
+                <p class="site-header__edition-date edition-date"></p>
+
+                <p class="site-header__edition-label">
+                    DAILY EDITION
+                </p>
+
+
+                <p class="visitor-status" id="visitor-status">
+
+                    VISITOR
+
+                    <span id="visitor-id-display">
+                        ······
+                    </span>
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="site-nav" aria-label="Primary navigation">
+
+            <a href="./index.html" class="site-nav__link" aria-current="page">
+                DISCOVER
+            </a>
+
+            <a href="./saved/" class="site-nav__link">
+                SAVED THOUGHTS
+            </a>
+
+            <a href="./about/" class="site-nav__link">
+                ABOUT
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         Discover Page
+         ===================================================== -->
+
+    <main class="page page--discover" id="main-content">
+
+        <!-- =================================================
+             Featured Quote
+             ================================================= -->
+
+        <section class="featured-quote" aria-labelledby="featured-quote-text">
+
+            <div class="featured-quote__meta">
+
+                <!-- Category selector -->
+
+                <div class="category-control">
+
+                    <span class="editorial-label">
+                        CATEGORY
+                    </span>
+
+
+                    <div class="category-menu" id="category-menu">
+
+                        <button class="category-menu__trigger" id="category-menu-trigger" type="button"
+                            aria-haspopup="listbox" aria-expanded="false" aria-controls="category-menu-list"
+                            data-category="wisdom">
+
+                            <span id="category-menu-value">
+                                WISDOM
+                            </span>
+
+                            <span class="category-menu__chevron" aria-hidden="true"></span>
+
+                        </button>
+
+
+                        <div class="category-menu__panel" id="category-menu-list" role="listbox"
+                            aria-label="Quote category" tabindex="-1" hidden>
+
+                            <button class="category-menu__option" type="button" role="option" data-category="random"
+                                aria-selected="false">
+                                RANDOM
+                            </button>
+
+                            <button class="category-menu__option" type="button" role="option" data-category="wisdom"
+                                aria-selected="true">
+                                WISDOM
+                            </button>
+
+                            <button class="category-menu__option" type="button" role="option" data-category="life"
+                                aria-selected="false">
+                                LIFE
+                            </button>
+
+                            <button class="category-menu__option" type="button" role="option"
+                                data-category="inspirational" aria-selected="false">
+                                INSPIRATIONAL
+                            </button>
+
+                            <button class="category-menu__option" type="button" role="option" data-category="success"
+                                aria-selected="false">
+                                SUCCESS
+                            </button>
+
+                            <button class="category-menu__option" type="button" role="option" data-category="courage"
+                                aria-selected="false">
+                                COURAGE
+                            </button>
+
+                            <button class="category-menu__option" type="button" role="option" data-category="happiness"
+                                aria-selected="false">
+                                HAPPINESS
+                            </button>
+
+                            <button class="category-menu__option" type="button" role="option" data-category="art"
+                                aria-selected="false">
+                                ART
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Quote body -->
+
+            <div class="featured-quote__body">
+
+                <blockquote class="featured-quote__blockquote">
+
+                    <p class="featured-quote__text" id="featured-quote-text">
+                        Knowing yourself is the beginning of all wisdom.
+                    </p>
+
+                    <footer class="featured-quote__author" id="featured-quote-author">
+                        — Aristotle
+                    </footer>
+
+                </blockquote>
+
+            </div>
+
+
+            <!-- Quote actions -->
+
+            <div class="featured-quote__actions">
+
+                <button class="quote-action quote-action--new" id="new-quote-button" type="button">
+                    NEW QUOTE
+                </button>
+
+
+                <div class="featured-quote__secondary-actions">
+
+                    <button class="quote-action" id="save-featured-button" type="button" data-quote-action="save">
+                        SAVE
+                    </button>
+
+                    <button class="quote-action" id="copy-featured-button" type="button" data-quote-action="copy">
+                        COPY
+                    </button>
+
+                    <button class="quote-action" id="share-featured-button" type="button" data-quote-action="share">
+                        SHARE
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             Recent Thoughts
+             ================================================= -->
+
+        <section class="recent-thoughts" aria-labelledby="recent-thoughts-heading">
+
+            <div class="recent-thoughts__header">
+
+                <h2 class="recent-thoughts__title" id="recent-thoughts-heading">
+                    RECENT THOUGHTS
+                </h2>
+
+                <p class="recent-thoughts__note">
+                    UNSAVED THOUGHTS EXPIRE AFTER 24H
+                </p>
+
+            </div>
+
+
+            <p class="recent-thoughts__empty" id="recent-thoughts-empty">
+                Newly discovered thoughts will appear here for 24 hours.
+            </p>
+
+
+            <div class="recent-thoughts__grid" id="recent-thoughts-grid"></div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         Shared Footer
+         ===================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="site-footer__top">
+
+            <div class="site-footer__brand">
+
+                <a href="./index.html" class="site-footer__name">
+                    QUOTELY
+                </a>
+
+                <p class="site-footer__tagline">
+                    Thoughts worth keeping.
+                </p>
+
+            </div>
+
+
+            <nav class="site-footer__nav" aria-label="Footer navigation">
+
+                <a href="./index.html">
+                    Discover
+                </a>
+
+                <a href="./saved/">
+                    Saved Thoughts
+                </a>
+
+                <a href="./about/">
+                    About
+                </a>
+
+                <a href="https://github.com/Abbas-Bhojani/CodeAlpha_Quotely" target="_blank" rel="noopener noreferrer">
+                    GitHub ↗
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="site-footer__bottom">
+
+            <p>
+                OPEN SOURCE
+            </p>
+
+            <p>
+                BUILT BY ABBAS BHOJANI
+            </p>
+
+            <p>
+                © 2026 QUOTELY
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         Visitor Identity Choice Dialog
+         ===================================================== -->
+
+    <dialog class="identity-dialog" id="identity-choice-dialog" aria-labelledby="identity-choice-title">
+
+        <div class="identity-dialog__inner">
+
+            <p class="identity-dialog__eyebrow">
+                WELCOME TO QUOTELY
+            </p>
+
+
+            <h2 class="identity-dialog__title" id="identity-choice-title">
+                Keep thoughts worth returning to.
+            </h2>
+
+
+            <p class="identity-dialog__text">
+                QUOTELY uses a private Visitor ID instead of a
+                traditional account.
+            </p>
+
+
+            <div class="identity-dialog__actions">
+
+                <button class="identity-primary-button" id="create-visitor-button" type="button">
+                    START AS NEW VISITOR
+                </button>
+
+
+                <button class="identity-secondary-button" id="recover-existing-button" type="button">
+                    RECOVER EXISTING VISITOR
+                </button>
+
+            </div>
+
+
+            <p class="identity-dialog__error" id="identity-choice-error" aria-live="polite"></p>
+
+        </div>
+
+    </dialog>
+
+
+    <!-- =====================================================
+         Visitor Name Dialog
+         ===================================================== -->
+
+    <dialog class="identity-dialog" id="visitor-name-dialog" aria-labelledby="visitor-name-title">
+
+        <div class="identity-dialog__inner">
+
+            <p class="identity-dialog__eyebrow">
+                ONE SMALL DETAIL
+            </p>
+
+
+            <h2 class="identity-dialog__title" id="visitor-name-title">
+                What should we call you?
+            </h2>
+
+
+            <p class="identity-dialog__text">
+                Your name will appear on the thoughts you share.
+                It is not a username and does not need to be unique.
+            </p>
+
+
+            <form class="recovery-form" id="visitor-name-form">
+
+                <label class="recovery-field identity-name-field">
+
+                    <span>
+                        YOUR NAME
+                    </span>
+
+                    <input id="visitor-display-name" name="quotely-display-name" type="text" autocomplete="off"
+                        autocapitalize="words" maxlength="40" placeholder="Enter your name" value="" required>
+
+                </label>
+
+
+                <p class="identity-dialog__error" id="visitor-name-error" aria-live="polite"></p>
+
+
+                <div class="identity-dialog__actions">
+
+                    <button class="identity-primary-button" id="visitor-name-submit" type="submit">
+                        CONTINUE
+                    </button>
+
+
+                    <button class="identity-secondary-button" id="visitor-name-back" type="button">
+                        BACK
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </dialog>
+
+
+    <!-- =====================================================
+         Visitor Recovery Dialog
+         ===================================================== -->
+
+    <dialog class="identity-dialog" id="recovery-dialog" aria-labelledby="recovery-title">
+
+        <div class="identity-dialog__inner">
+
+            <p class="identity-dialog__eyebrow">
+                VISITOR RECOVERY
+            </p>
+
+
+            <h2 class="identity-dialog__title" id="recovery-title">
+                Return to your collection.
+            </h2>
+
+
+            <p class="identity-dialog__text">
+                Enter the Visitor ID and recovery code you saved
+                when your identity was created.
+            </p>
+
+
+            <form class="recovery-form" id="recovery-form">
+
+                <label class="recovery-field">
+
+                    <span>
+                        VISITOR ID
+                    </span>
+
+                    <input id="recovery-visitor-id" type="text" inputmode="numeric" autocomplete="off" maxlength="6"
+                        placeholder="000001" required>
+
+                </label>
+
+
+                <label class="recovery-field">
+
+                    <span>
+                        RECOVERY CODE
+                    </span>
+
+                    <input id="recovery-code" type="text" inputmode="numeric" autocomplete="off" maxlength="7"
+                        placeholder="123-456" required>
+
+                </label>
+
+
+                <p class="identity-dialog__error" id="recovery-error" aria-live="polite"></p>
+
+
+                <div class="identity-dialog__actions">
+
+                    <button class="identity-primary-button" id="recovery-submit" type="submit">
+                        RECOVER VISITOR
+                    </button>
+
+
+                    <button class="identity-secondary-button" id="recovery-back" type="button">
+                        BACK
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </dialog>
+
+
+    <!-- =====================================================
+         New Visitor Credential Dialog
+         ===================================================== -->
+
+    <dialog class="visitor-dialog" id="visitor-dialog" aria-labelledby="visitor-dialog-title">
+
+        <div class="visitor-dialog__header">
+
+            <div>
+
+                <p class="visitor-dialog__eyebrow">
+                    YOUR QUOTELY IDENTITY
+                </p>
+
+                <h2 class="visitor-dialog__title" id="visitor-dialog-title">
+                    Keep this somewhere safe.
+                </h2>
+
+            </div>
+
+
+            <button class="visitor-dialog__close" id="visitor-dialog-close" type="button"
+                aria-label="Close visitor information">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="visitor-dialog__body">
+
+            <p class="visitor-dialog__intro">
+                QUOTELY does not require a traditional account.
+                This Visitor ID belongs to your collection.
+            </p>
+
+
+            <div class="visitor-credential">
+
+                <p class="visitor-credential__label">
+                    VISITOR ID
+                </p>
+
+                <p class="visitor-credential__value" id="visitor-dialog-id">
+                    000000
+                </p>
+
+            </div>
+
+
+            <div class="visitor-credential">
+
+                <p class="visitor-credential__label">
+                    RECOVERY CODE
+                </p>
+
+                <p class="visitor-credential__value" id="visitor-dialog-recovery">
+                    000-000
+                </p>
+
+            </div>
+
+
+            <p class="visitor-dialog__warning">
+                Your recovery code is shown only during visitor
+                creation. Keep it private. QUOTELY cannot display
+                the original code again later.
+            </p>
+
+        </div>
+
+
+        <div class="visitor-dialog__actions">
+
+            <button class="visitor-dialog__download" id="visitor-recovery-download" type="button">
+                DOWNLOAD RECOVERY FILE
+            </button>
+
+
+            <button class="visitor-dialog__continue" id="visitor-dialog-close-secondary" type="button">
+                CONTINUE TO QUOTELY
+            </button>
+
+        </div>
+
+    </dialog>
+
+
+    <!-- =====================================================
+         Recovery Success Dialog
+         ===================================================== -->
+
+    <dialog class="identity-dialog" id="recovery-success-dialog" aria-labelledby="recovery-success-title">
+
+        <div class="identity-dialog__inner">
+
+            <p class="identity-dialog__eyebrow">
+                IDENTITY RECOVERED
+            </p>
+
+
+            <h2 class="identity-dialog__title" id="recovery-success-title">
+                Welcome back.
+            </h2>
+
+
+            <p class="identity-dialog__text">
+
+                Visitor
+
+                <strong id="recovery-success-id">
+                    000000
+                </strong>
+
+                is now connected to this browser.
+
+            </p>
+
+
+            <div class="identity-dialog__actions">
+
+                <button class="identity-primary-button" id="recovery-success-close" type="button">
+                    CONTINUE TO QUOTELY
+                </button>
+
+            </div>
+
+        </div>
+
+    </dialog>
+
+
+    <!-- =====================================================
+         Share Dialog
+         ===================================================== -->
+
+    <dialog class="share-dialog" id="share-dialog" aria-labelledby="share-dialog-title">
+
+        <div class="share-dialog__header">
+
+            <div>
+
+                <p class="share-dialog__eyebrow">
+                    SHARE A THOUGHT
+                </p>
+
+                <h2 class="share-dialog__title" id="share-dialog-title">
+                    Made for keeping.
+                </h2>
+
+            </div>
+
+
+            <button class="share-dialog__close" id="share-dialog-close" type="button" aria-label="Close share dialog">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="share-dialog__preview">
+
+            <canvas class="share-preview" id="share-preview" width="1080" height="1350"
+                aria-label="Preview of the QUOTELY share image"></canvas>
+
+        </div>
+
+
+        <div class="share-dialog__actions">
+
+            <button class="share-dialog__action" id="native-share-button" type="button" hidden>
+                SHARE IMAGE
+            </button>
+
+
+            <button class="share-dialog__action" id="whatsapp-share-button" type="button">
+                WHATSAPP
+            </button>
+
+
+            <button class="share-dialog__action share-dialog__action--primary" id="download-share-button" type="button">
+                DOWNLOAD PNG
+            </button>
+
+        </div>
+
+
+        <p class="share-dialog__note">
+            Direct image sharing depends on your browser and device.
+            WhatsApp shares the quote as text; download the PNG when
+            you want to post the QUOTELY image manually.
+        </p>
+
+    </dialog>
+
+
+    <!-- =====================================================
+         JavaScript
+         ===================================================== -->
+
+    <script type="module" src="./js/app.js"></script>
+
+</body>
+
+</html>

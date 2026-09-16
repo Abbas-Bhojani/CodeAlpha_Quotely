@@ -1,0 +1,412 @@
+/* =========================================================
+   QUOTELY — About
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   Page
+   --------------------------------------------------------- */
+
+.page--about {
+    padding-bottom: 5rem;
+}
+
+
+/* ---------------------------------------------------------
+   Introduction
+   --------------------------------------------------------- */
+
+.about-intro {
+    max-width: 56rem;
+
+    padding: 4.5rem 0 4rem;
+}
+
+
+.about-intro__eyebrow,
+.about-question__label,
+.creator-card__eyebrow {
+    margin: 0;
+
+    color: var(--color-metadata);
+
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+
+.about-intro__title {
+    max-width: 50rem;
+
+    margin: 0.9rem 0 0;
+
+    font-family: var(--font-editorial);
+
+    font-size: clamp(
+        3.2rem,
+        6.5vw,
+        6rem
+    );
+
+    font-weight: 500;
+
+    line-height: 0.93;
+
+    letter-spacing: -0.025em;
+}
+
+
+.about-intro__summary {
+    max-width: 39rem;
+
+    margin: 2rem 0 0;
+
+    color: var(--color-ink-secondary);
+
+    font-size: 0.95rem;
+
+    line-height: 1.75;
+}
+
+
+/* ---------------------------------------------------------
+   Questions
+   --------------------------------------------------------- */
+
+.about-questions {
+    border-top: var(--rule-strong);
+}
+
+
+.about-question {
+    display: grid;
+
+    grid-template-columns:
+        minmax(10rem, 0.42fr)
+        minmax(0, 1fr);
+
+    gap: clamp(
+        2.5rem,
+        7vw,
+        7rem
+    );
+
+    padding: 2.7rem 0;
+
+    border-bottom: var(--rule-thin);
+}
+
+
+.about-question__label {
+    padding-top: 0.2rem;
+}
+
+
+.about-question__answer {
+    max-width: 43rem;
+}
+
+
+.about-question__answer p {
+    margin: 0;
+
+    color: var(--color-ink-secondary);
+
+    font-size: 0.95rem;
+
+    line-height: 1.78;
+}
+
+
+.about-question__answer p + p {
+    margin-top: 1.2rem;
+}
+
+
+.about-inline-link {
+    display: inline-block;
+
+    margin-top: 1.6rem;
+
+    padding-bottom: 0.25rem;
+
+    border-bottom:
+        1px solid currentColor;
+
+    color: var(--color-ink);
+
+    font-size: 0.66rem;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+
+    text-decoration: none;
+}
+
+
+.about-inline-link:hover {
+    opacity: 0.65;
+}
+
+
+/* ---------------------------------------------------------
+   Creator Card
+   --------------------------------------------------------- */
+
+.creator-card {
+    display: grid;
+
+    grid-template-columns:
+        minmax(13rem, 0.65fr)
+        minmax(0, 1fr);
+
+    gap: clamp(
+        3rem,
+        7vw,
+        7rem
+    );
+
+    margin-top: 4.5rem;
+
+    padding: clamp(
+        2rem,
+        5vw,
+        4rem
+    );
+
+    border:
+        1px solid var(--color-rule-strong);
+
+    background:
+        var(--color-paper-secondary);
+}
+
+
+.creator-card__identity {
+    min-width: 0;
+}
+
+
+.creator-card__avatar {
+    display: block;
+
+    width: clamp(
+        6rem,
+        10vw,
+        8rem
+    );
+
+    aspect-ratio: 1 / 1;
+
+    margin:
+        1.6rem 0 1.35rem;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    object-position: center;
+}
+
+
+.creator-card__identity h2 {
+    margin: 0;
+
+    font-family:
+        var(--font-editorial);
+
+    font-size: clamp(
+        2.8rem,
+        5vw,
+        4.5rem
+    );
+
+    font-weight: 500;
+
+    line-height: 0.95;
+}
+
+
+.creator-card__role {
+    margin: 0.8rem 0 0;
+
+    color: var(--color-metadata);
+
+    font-size: 0.72rem;
+
+    letter-spacing: 0.08em;
+}
+
+
+.creator-card__message {
+    max-width: 44rem;
+}
+
+
+.creator-card__message > p {
+    margin: 0;
+
+    color: var(--color-ink-secondary);
+
+    font-size: 0.92rem;
+
+    line-height: 1.75;
+}
+
+
+.creator-card__message > p + p {
+    margin-top: 1.3rem;
+}
+
+
+.creator-card__quote {
+    color:
+        var(--color-ink) !important;
+
+    font-family:
+        var(--font-editorial);
+
+    font-size: clamp(
+        1.8rem,
+        3.2vw,
+        2.7rem
+    ) !important;
+
+    line-height: 1.08 !important;
+}
+
+
+.creator-card__links {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 1rem 1.5rem;
+
+    margin-top: 2rem;
+}
+
+
+.creator-card__links a {
+    padding-bottom: 0.25rem;
+
+    border-bottom:
+        1px solid transparent;
+
+    color: var(--color-ink);
+
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+
+    text-decoration: none;
+}
+
+
+.creator-card__links a:hover {
+    border-bottom-color:
+        currentColor;
+}
+
+
+/* ---------------------------------------------------------
+   Responsive
+   --------------------------------------------------------- */
+
+@media (
+    max-width: 48rem
+) {
+
+    .page--about {
+        padding-bottom: 3rem;
+    }
+
+
+    .about-intro {
+        padding:
+            3rem 0;
+    }
+
+
+    .about-question {
+        grid-template-columns:
+            1fr;
+
+        gap: 1rem;
+
+        padding:
+            2rem 0;
+    }
+
+
+    .creator-card {
+        grid-template-columns:
+            1fr;
+
+        gap: 2.5rem;
+
+        margin-top:
+            3rem;
+    }
+
+
+    .creator-card__avatar {
+        width: 7rem;
+    }
+}
+
+
+@media (
+    max-width: 32rem
+) {
+
+    .about-intro__title {
+        font-size:
+            clamp(
+                3rem,
+                15vw,
+                4.3rem
+            );
+    }
+
+
+    .about-intro__summary,
+    .about-question__answer p,
+    .creator-card__message > p {
+        font-size: 0.9rem;
+    }
+
+
+    .creator-card {
+        padding:
+            1.5rem;
+    }
+
+
+    .creator-card__avatar {
+        width: 6.25rem;
+
+        margin-top: 1.4rem;
+    }
+
+
+    .creator-card__identity h2 {
+        font-size:
+            clamp(
+                2.7rem,
+                14vw,
+                3.8rem
+            );
+    }
+
+
+    .creator-card__links {
+        gap:
+            0.8rem 1.2rem;
+    }
+}

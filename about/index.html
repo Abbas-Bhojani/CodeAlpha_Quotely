@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         Primary SEO
+         ===================================================== -->
+
+    <title>About QUOTELY | How It Works & Why It Was Built</title>
+
+    <meta name="description"
+        content="Learn how QUOTELY works, why it uses Visitor IDs, how quotes and Saved Thoughts are stored, and why Abbas Bhojani built the project.">
+
+    <meta name="author" content="Abbas Bhojani">
+
+    <meta name="robots" content="index, follow, max-image-preview:large">
+
+
+    <!-- Replace with the final production URL before launch -->
+
+    <link rel="canonical" href="https://quotely.abbasbhojani.com/about/">
+
+
+    <!-- =====================================================
+         Open Graph
+         ===================================================== -->
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:site_name" content="QUOTELY">
+
+    <meta property="og:title" content="About QUOTELY">
+
+    <meta property="og:description"
+        content="The story, technical approach and ideas behind QUOTELY — a simple quote experience deliberately built to explore larger product systems.">
+
+    <meta property="og:url" content="https://quotely.abbasbhojani.com/about/">
+
+
+    <!-- =====================================================
+         Social Sharing
+         ===================================================== -->
+
+    <meta name="twitter:card" content="summary">
+
+    <meta name="twitter:title" content="About QUOTELY">
+
+    <meta name="twitter:description"
+        content="Learn how QUOTELY works and why a simple quote generator became an experiment in identity, persistence, backend architecture and product design.">
+
+
+    <!-- =====================================================
+         Favicon
+         ===================================================== -->
+
+    <link rel="icon" href="../assets/icons/favicon.png" sizes="any">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon.png">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon.png">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/favicon.png">
+
+
+    <!-- =====================================================
+         Appearance
+         ===================================================== -->
+
+    <meta name="theme-color" content="#f2f6f8">
+
+
+    <!-- =====================================================
+         Styles
+         ===================================================== -->
+
+    <link rel="stylesheet" href="../style.css">
+
+    <link rel="stylesheet" href="./about.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         Shared Masthead
+         ===================================================== -->
+
+    <header class="site-header">
+
+        <div class="site-header__top">
+
+            <div class="site-header__brand">
+
+                <a href="../index.html" class="site-header__brand-link">
+
+                    <span class="site-header__name">
+                        QUOTELY
+                    </span>
+
+                    <span class="site-header__tagline">
+                        THOUGHTS WORTH KEEPING
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <div class="site-header__edition" aria-label="Publication edition">
+
+                <p class="site-header__edition-date edition-date"></p>
+
+                <p class="site-header__edition-label">
+                    DAILY EDITION
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="site-nav" aria-label="Primary navigation">
+
+            <a href="../index.html" class="site-nav__link">
+                DISCOVER
+            </a>
+
+            <a href="../saved/" class="site-nav__link">
+                SAVED THOUGHTS
+            </a>
+
+            <a href="./index.html" class="site-nav__link" aria-current="page">
+                ABOUT
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         About
+         ===================================================== -->
+
+    <main class="page page--about" id="main-content">
+
+        <!-- =================================================
+             Intro
+             ================================================= -->
+
+        <section class="about-intro">
+
+            <p class="about-intro__eyebrow">
+                ABOUT QUOTELY
+            </p>
+
+            <h1 class="about-intro__title">
+                A simple place for thoughts worth keeping.
+            </h1>
+
+            <p class="about-intro__summary">
+                QUOTELY is a quote discovery experience built around
+                finding, keeping and sharing ideas without turning the
+                experience into another endless content feed.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             Questions
+             ================================================= -->
+
+        <section class="about-questions" aria-label="About QUOTELY">
+
+            <article class="about-question">
+
+                <p class="about-question__label">
+                    WHAT IS QUOTELY?
+                </p>
+
+                <div class="about-question__answer">
+
+                    <p>
+                        QUOTELY is a lightweight quote discovery application.
+                        You can explore thoughts by category, discover a new
+                        quote, return to recently generated thoughts and save
+                        the ones you want to keep.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="about-question">
+
+                <p class="about-question__label">
+                    WHAT CAN I DO WITH IT?
+                </p>
+
+                <div class="about-question__answer">
+
+                    <p>
+                        Quotes can be saved permanently, copied as text or
+                        turned into a purpose-built QUOTELY image for sharing.
+                        Recent Thoughts remain available temporarily so you can
+                        return to something you discovered without automatically
+                        filling your permanent collection.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="about-question">
+
+                <p class="about-question__label">
+                    HOW DOES IT WORK?
+                </p>
+
+                <div class="about-question__answer">
+
+                    <p>
+                        The interface is built with HTML, CSS and vanilla
+                        JavaScript. A Cloudflare Worker acts as the trusted
+                        backend, while Cloudflare D1 stores the quote catalogue,
+                        visitor identities and Saved Thoughts.
+                    </p>
+
+                    <p>
+                        Quote sources can be collected into D1 first, allowing
+                        QUOTELY to serve quotes from its own catalogue instead
+                        of depending on an external API every time someone
+                        presses New Quote.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="about-question">
+
+                <p class="about-question__label">
+                    WHY DOES QUOTELY USE VISITOR IDS?
+                </p>
+
+                <div class="about-question__answer">
+
+                    <p>
+                        QUOTELY avoids a conventional signup form. A visitor
+                        receives a recoverable six-digit Visitor ID instead.
+                        This allows Saved Thoughts to belong to the visitor
+                        while keeping the experience lighter than a normal
+                        account system.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="about-question">
+
+                <p class="about-question__label">
+                    IS QUOTELY OPEN SOURCE?
+                </p>
+
+                <div class="about-question__answer">
+
+                    <p>
+                        Yes. The project is open source so its interface,
+                        backend structure and implementation can be explored,
+                        studied and extended.
+                    </p>
+
+                    <a class="about-inline-link" href="https://github.com/Abbas-Bhojani/CodeAlpha_Quotely" target="_blank"
+                        rel="noopener noreferrer">
+                        VIEW ON GITHUB ↗
+                    </a>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =================================================
+             Creator
+             ================================================= -->
+
+        <section class="creator-card" aria-labelledby="creator-name">
+
+            <div class="creator-card__identity">
+
+                <p class="creator-card__eyebrow">
+                    FROM THE CREATOR
+                </p>
+
+
+                <img class="creator-card__avatar" src="../assets/images/abbas-avatar.png" alt="Abbas Bhojani">
+
+
+                <h2 id="creator-name">
+                    Abbas Bhojani
+                </h2>
+
+
+                <p class="creator-card__role">
+                    Creator of QUOTELY
+                </p>
+
+            </div>
+
+
+            <div class="creator-card__message">
+
+                <p class="creator-card__quote">
+                    “A quote generator could have been a few lines of
+                    JavaScript. I deliberately made QUOTELY more complex
+                    because the simple idea gave me room to experiment with
+                    things I wanted to understand better.”
+                </p>
+
+                <p>
+                    That included anonymous identity, recovery, persistent
+                    storage, server-side security, API architecture,
+                    temporary local state, share-image generation and
+                    Cloudflare's serverless tools.
+                </p>
+
+                <p>
+                    The goal was never to make quotes complicated. It was to
+                    use a small product as a practical place to explore how
+                    larger product systems are designed.
+                </p>
+
+
+                <nav class="creator-card__links" aria-label="Abbas Bhojani links">
+
+                    <a href="https://abbasbhojani.com" target="_blank" rel="noopener noreferrer">
+                        WEBSITE ↗
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/abbas-bhojani/" target="_blank" rel="noopener noreferrer">
+                        LINKEDIN ↗
+                    </a>
+
+                    <a href="https://github.com/Abbas-Bhojani" target="_blank" rel="noopener noreferrer">
+                        GITHUB ↗
+                    </a>
+
+                </nav>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         Shared Footer
+         ===================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="site-footer__top">
+
+            <div class="site-footer__brand">
+
+                <a href="../index.html" class="site-footer__name">
+                    QUOTELY
+                </a>
+
+                <p class="site-footer__tagline">
+                    Thoughts worth keeping.
+                </p>
+
+            </div>
+
+
+            <nav class="site-footer__nav" aria-label="Footer navigation">
+
+                <a href="../index.html">
+                    Discover
+                </a>
+
+                <a href="../saved/">
+                    Saved Thoughts
+                </a>
+
+                <a href="./index.html">
+                    About
+                </a>
+
+                <a href="https://github.com/Abbas-Bhojani/CodeAlpha_Quotely" target="_blank" rel="noopener noreferrer">
+                    GitHub ↗
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="site-footer__bottom">
+
+            <p>
+                OPEN SOURCE
+            </p>
+
+            <p>
+                BUILT BY ABBAS BHOJANI
+            </p>
+
+            <p>
+                © 2026 QUOTELY
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script>
+        /*  =========================================================
+            Date & Time
+            ========================================================= */
+
+        document.querySelectorAll(".edition-date").forEach((element) => {
+            element.textContent = new Date()
+                .toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric"
+                })
+                .toUpperCase();
+        });
+    </script>
+
+</body>
+
+</html>

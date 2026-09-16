@@ -1,0 +1,23 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "worker",
+	"main": "src/index.js",
+	"compatibility_date": "2026-09-10",
+	"assets": {
+		"directory": "../public",
+		"binding": "ASSETS",
+		"run_worker_first": [
+			"/api/*"
+		]
+	},
+	"vars": {
+		"PUBLIC_ORIGIN": "https://quotely.abbasbhojani.com"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "quotely-db",
+			"database_id": "b194f71d-ce1d-4c8e-9a2d-7bf4440ea2c8"
+		}
+	]
+}

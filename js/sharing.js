@@ -1,0 +1,1106 @@
+/**
+ * QUOTELY — Copy & Sharing
+ *
+ * This module handles:
+ * - copying quote + author
+ * - opening the share modal
+ * - generating the standardized 4:5 QUOTELY image
+ * - downloading the PNG
+ * - using native image sharing when the browser supports it
+ *
+ * SAVE is intentionally handled by saved-thoughts.js.
+ *
+ * None of these actions request a new quote.
+ */
+
+import {
+    getLastDisplayedQuote,
+    getRecentThoughts
+} from "./storage.js";
+
+
+const SHARE_WIDTH = 1080;
+const SHARE_HEIGHT = 1350;
+
+
+/* ---------------------------------------------------------
+   Quote helpers
+   --------------------------------------------------------- */
+
+/**
+ * Returns a quote based on where an action originated.
+ *
+ * Featured quote:
+ * use the last displayed quote.
+ *
+ * Recent Thought:
+ * locate the thought using its stored quote ID.
+ */
+function resolveQuoteFromAction(button) {
+    const recentThought =
+        button.closest(
+            ".recent-thought"
+        );
+
+    if (!recentThought) {
+        return getLastDisplayedQuote();
+    }
+
+    const quoteId =
+        recentThought.dataset.quoteId;
+
+    return getRecentThoughts()
+        .find(
+            (thought) => {
+                return (
+                    String(thought.id)
+                    === String(quoteId)
+                );
+            }
+        )
+        || null;
+}
+
+
+/**
+ * Exact clipboard format required by QUOTELY:
+ *
+ * Quote text
+ * - Author
+ */
+function formatQuoteForClipboard(quote) {
+    return `${quote.quote}\n- ${quote.author}`;
+}
+
+
+/* ---------------------------------------------------------
+   Copy
+   --------------------------------------------------------- */
+
+async function copyQuote(
+    quote,
+    button
+) {
+    if (!quote) {
+        return;
+    }
+
+    const text =
+        formatQuoteForClipboard(
+            quote
+        );
+
+    try {
+        await navigator.clipboard.writeText(
+            text
+        );
+
+        showTemporaryButtonState(
+            button,
+            "COPIED"
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "QUOTELY could not copy the quote.",
+            error
+        );
+    }
+}
+
+
+/**
+ * Gives small confirmation feedback without permanently
+ * changing the action label.
+ */
+function showTemporaryButtonState(
+    button,
+    temporaryLabel
+) {
+    const originalLabel =
+        button.textContent;
+
+    button.textContent =
+        temporaryLabel;
+
+    window.setTimeout(
+        () => {
+            button.textContent =
+                originalLabel;
+        },
+        1400
+    );
+}
+
+
+/* ---------------------------------------------------------
+   Share image composition
+   --------------------------------------------------------- */
+
+/**
+ * Creates the standardized 1080 × 1350 QUOTELY image.
+ *
+ * Category-specific website effects intentionally do not
+ * change this exported composition.
+ */
+async function createShareCanvas(
+    quote
+) {
+    await document.fonts.ready;
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+    canvas.width =
+        SHARE_WIDTH;
+
+    canvas.height =
+        SHARE_HEIGHT;
+
+    const context =
+        canvas.getContext(
+            "2d"
+        );
+
+    if (!context) {
+        return null;
+    }
+
+
+    /* Background */
+
+    context.fillStyle =
+        "#f2f6f8";
+
+    context.fillRect(
+        0,
+        0,
+        SHARE_WIDTH,
+        SHARE_HEIGHT
+    );
+
+
+    /* Editorial rule */
+
+    context.strokeStyle =
+        "#8297a3";
+
+    context.lineWidth =
+        2;
+
+    context.beginPath();
+
+    context.moveTo(
+        90,
+        150
+    );
+
+    context.lineTo(
+        990,
+        150
+    );
+
+    context.stroke();
+
+
+    /* Top-left category */
+
+    context.fillStyle =
+        "#344754";
+
+    context.font =
+        '600 26px "Inter", Arial, sans-serif';
+
+    context.textAlign =
+        "left";
+
+    context.textBaseline =
+        "alphabetic";
+
+    context.fillText(
+        quote.category
+            ?.toUpperCase()
+        || "RANDOM",
+        90,
+        110
+    );
+
+
+    /* Top-right QUOTELY */
+
+    context.fillStyle =
+        "#101c24";
+
+    context.font =
+        '700 29px "Inter", Arial, sans-serif';
+
+    context.textAlign =
+        "right";
+
+    context.fillText(
+        "QUOTELY",
+        990,
+        110
+    );
+
+
+    /* Quote */
+
+    drawCenteredQuote(
+        context,
+        quote.quote,
+        quote.author
+    );
+
+
+    /* Bottom identity */
+
+    context.fillStyle =
+        "#6b7c87";
+
+    context.font =
+        '500 23px "Inter", Arial, sans-serif';
+
+    context.textAlign =
+        "center";
+
+
+    /*
+     * Visitor naming is not defined yet.
+     * This remains temporary until that product decision
+     * is finalized.
+     */
+    const visitorName =
+        localStorage.getItem(
+            "quotely:visitorName"
+        );
+
+
+    context.fillText(
+        visitorName
+            ? `Generated by ${visitorName}`
+            : "Generated by QUOTELY",
+        SHARE_WIDTH / 2,
+        1245
+    );
+
+
+    /* Bottom rule */
+
+    context.strokeStyle =
+        "#becbd2";
+
+    context.lineWidth =
+        2;
+
+    context.beginPath();
+
+    context.moveTo(
+        90,
+        1195
+    );
+
+    context.lineTo(
+        990,
+        1195
+    );
+
+    context.stroke();
+
+
+    return canvas;
+}
+
+
+/**
+ * Finds an appropriate serif size for the quote and keeps
+ * the quote + author visually centered as one composition.
+ */
+function drawCenteredQuote(
+    context,
+    quoteText,
+    author
+) {
+    const maxWidth =
+        820;
+
+    let fontSize =
+        74;
+
+    const minimumFontSize =
+        42;
+
+    let lines =
+        [];
+
+
+    while (
+        fontSize
+        >= minimumFontSize
+    ) {
+        context.font =
+            `500 ${fontSize}px "Cormorant Garamond", Georgia, serif`;
+
+        lines =
+            wrapText(
+                context,
+                quoteText,
+                maxWidth
+            );
+
+        const lineHeight =
+            fontSize * 1.08;
+
+        const estimatedHeight =
+            lines.length
+            * lineHeight;
+
+        if (
+            lines.length <= 7
+            && estimatedHeight <= 620
+        ) {
+            break;
+        }
+
+        fontSize -=
+            4;
+    }
+
+
+    const lineHeight =
+        fontSize * 1.08;
+
+    const quoteHeight =
+        lines.length
+        * lineHeight;
+
+    const authorGap =
+        55;
+
+    const authorHeight =
+        32;
+
+    const totalHeight =
+        quoteHeight
+        + authorGap
+        + authorHeight;
+
+    let currentY =
+        (
+            SHARE_HEIGHT
+            - totalHeight
+        )
+        / 2
+        + fontSize;
+
+
+    context.fillStyle =
+        "#101c24";
+
+    context.font =
+        `500 ${fontSize}px "Cormorant Garamond", Georgia, serif`;
+
+    context.textAlign =
+        "center";
+
+
+    lines.forEach(
+        (line) => {
+            context.fillText(
+                line,
+                SHARE_WIDTH / 2,
+                currentY
+            );
+
+            currentY +=
+                lineHeight;
+        }
+    );
+
+
+    currentY +=
+        authorGap;
+
+
+    context.fillStyle =
+        "#344754";
+
+    context.font =
+        '500 30px "Inter", Arial, sans-serif';
+
+    context.fillText(
+        `— ${author}`,
+        SHARE_WIDTH / 2,
+        currentY
+    );
+}
+
+
+/**
+ * Wraps canvas text using the width of actual rendered words.
+ */
+function wrapText(
+    context,
+    text,
+    maxWidth
+) {
+    const words =
+        text
+            .trim()
+            .split(/\s+/);
+
+    const lines =
+        [];
+
+    let currentLine =
+        "";
+
+
+    words.forEach(
+        (word) => {
+            const testLine =
+                currentLine
+                    ? `${currentLine} ${word}`
+                    : word;
+
+            const width =
+                context
+                    .measureText(
+                        testLine
+                    )
+                    .width;
+
+            if (
+                width > maxWidth
+                && currentLine
+            ) {
+                lines.push(
+                    currentLine
+                );
+
+                currentLine =
+                    word;
+
+            } else {
+
+                currentLine =
+                    testLine;
+            }
+        }
+    );
+
+
+    if (currentLine) {
+        lines.push(
+            currentLine
+        );
+    }
+
+    return lines;
+}
+
+
+/* ---------------------------------------------------------
+   Modal
+   --------------------------------------------------------- */
+
+async function openShareModal(
+    quote
+) {
+    if (!quote) {
+        return;
+    }
+
+    const dialog =
+        document.querySelector(
+            "#share-dialog"
+        );
+
+    const previewCanvas =
+        document.querySelector(
+            "#share-preview"
+        );
+
+    if (
+        !dialog
+        || !previewCanvas
+    ) {
+        return;
+    }
+
+
+    const generatedCanvas =
+        await createShareCanvas(
+            quote
+        );
+
+    if (!generatedCanvas) {
+        return;
+    }
+
+
+    const previewContext =
+        previewCanvas.getContext(
+            "2d"
+        );
+
+    previewCanvas.width =
+        generatedCanvas.width;
+
+    previewCanvas.height =
+        generatedCanvas.height;
+
+    previewContext.clearRect(
+        0,
+        0,
+        previewCanvas.width,
+        previewCanvas.height
+    );
+
+    previewContext.drawImage(
+        generatedCanvas,
+        0,
+        0
+    );
+
+
+    /*
+     * Keep the actual quote available while the modal is open.
+     * No quote text has to be fetched again.
+     */
+    dialog._quotelyQuote =
+        quote;
+
+
+    updateNativeShareAvailability(
+        generatedCanvas,
+        quote
+    );
+
+
+    if (
+        typeof dialog.showModal
+        === "function"
+    ) {
+        dialog.showModal();
+
+    } else {
+
+        dialog.setAttribute(
+            "open",
+            ""
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   PNG filename
+   --------------------------------------------------------- */
+
+function normalizeFilenamePart(
+    value
+) {
+    return String(
+        value || ""
+    )
+        .toLowerCase()
+        .trim()
+        .normalize(
+            "NFKD"
+        )
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .replace(
+            /[^a-z0-9]+/g,
+            "-"
+        )
+        .replace(
+            /^-+|-+$/g,
+            ""
+        );
+}
+
+
+function createPngFilename(
+    quote
+) {
+    const author =
+        normalizeFilenamePart(
+            quote.author
+            || "unknown"
+        );
+
+
+    /*
+     * Prefer the real quote ID supplied by QUOTELY.
+     *
+     * Generated thoughts already have an ID. For curated
+     * fallback thoughts that do not have one, create a small
+     * deterministic identifier from the quote text.
+     */
+    const shortId =
+        createShortQuoteId(
+            quote
+        );
+
+
+    return (
+        `quotely-${author}-${shortId}.png`
+    );
+}
+
+
+/**
+ * Creates a short filename-safe identifier.
+ *
+ * If the quote already has a database/storage ID, we use it.
+ * Otherwise a deterministic hash is created from the quote
+ * and author so the same curated thought gets the same ID.
+ */
+function createShortQuoteId(
+    quote
+) {
+    if (
+        quote.id !== undefined
+        && quote.id !== null
+        && String(
+            quote.id
+        ).trim()
+    ) {
+        return normalizeFilenamePart(
+            String(
+                quote.id
+            )
+        )
+            .slice(
+                -8
+            )
+        || "thought";
+    }
+
+
+    const source =
+        `${quote.quote || ""}|${quote.author || ""}`;
+
+
+    let hash =
+        0;
+
+
+    for (
+        let index = 0;
+        index < source.length;
+        index += 1
+    ) {
+        hash =
+            (
+                (
+                    hash << 5
+                )
+                - hash
+                + source.charCodeAt(
+                    index
+                )
+            )
+            | 0;
+    }
+
+
+    return Math
+        .abs(
+            hash
+        )
+        .toString(
+            36
+        )
+        .slice(
+            0,
+            8
+        );
+}
+
+
+/* ---------------------------------------------------------
+   Download
+   --------------------------------------------------------- */
+
+async function downloadShareImage(
+    quote
+) {
+    const canvas =
+        await createShareCanvas(
+            quote
+        );
+
+    if (!canvas) {
+        return;
+    }
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+    link.download =
+        createPngFilename(
+            quote
+        );
+
+    link.href =
+        canvas.toDataURL(
+            "image/png"
+        );
+
+    link.click();
+}
+
+
+/* ---------------------------------------------------------
+   Native image sharing
+   --------------------------------------------------------- */
+
+async function canvasToFile(
+    canvas,
+    quote
+) {
+    const blob =
+        await new Promise(
+            (resolve) => {
+                canvas.toBlob(
+                    resolve,
+                    "image/png"
+                );
+            }
+        );
+
+    if (!blob) {
+        return null;
+    }
+
+    return new File(
+        [blob],
+        createPngFilename(
+            quote
+        ),
+        {
+            type:
+                "image/png"
+        }
+    );
+}
+
+
+async function canShareImage(
+    canvas,
+    quote
+) {
+    if (
+        !navigator.share
+        || !navigator.canShare
+    ) {
+        return false;
+    }
+
+    const file =
+        await canvasToFile(
+            canvas,
+            quote
+        );
+
+    if (!file) {
+        return false;
+    }
+
+    return navigator.canShare({
+        files: [file]
+    });
+}
+
+
+async function updateNativeShareAvailability(
+    canvas,
+    quote
+) {
+    const shareButton =
+        document.querySelector(
+            "#native-share-button"
+        );
+
+    if (!shareButton) {
+        return;
+    }
+
+    const supported =
+        await canShareImage(
+            canvas,
+            quote
+        );
+
+    shareButton.hidden =
+        !supported;
+}
+
+
+async function shareImageNatively(
+    quote
+) {
+    const canvas =
+        await createShareCanvas(
+            quote
+        );
+
+    if (!canvas) {
+        return;
+    }
+
+    const file =
+        await canvasToFile(
+            canvas,
+            quote
+        );
+
+    if (!file) {
+        return;
+    }
+
+    try {
+        await navigator.share({
+            files: [file],
+            title: "QUOTELY",
+            text:
+                formatQuoteForClipboard(
+                    quote
+                )
+        });
+
+    } catch (error) {
+
+        /*
+         * AbortError normally means the visitor simply closed
+         * the operating system's share sheet.
+         */
+        if (
+            error.name
+            !== "AbortError"
+        ) {
+            console.warn(
+                "QUOTELY image sharing failed.",
+                error
+            );
+        }
+    }
+}
+
+
+/* ---------------------------------------------------------
+   WhatsApp text sharing
+   --------------------------------------------------------- */
+
+/**
+ * WhatsApp web links cannot reliably attach our generated
+ * PNG, so this action honestly shares the quote as text.
+ *
+ * The modal keeps PNG download available separately.
+ */
+function shareQuoteToWhatsApp(
+    quote
+) {
+    const text =
+        encodeURIComponent(
+            formatQuoteForClipboard(
+                quote
+            )
+        );
+
+    const url =
+        `https://wa.me/?text=${text}`;
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+}
+
+
+/* ---------------------------------------------------------
+   Public setup
+   --------------------------------------------------------- */
+
+export function initializeSharing() {
+    const shareDialog =
+        document.querySelector(
+            "#share-dialog"
+        );
+
+    const closeButton =
+        document.querySelector(
+            "#share-dialog-close"
+        );
+
+    const downloadButton =
+        document.querySelector(
+            "#download-share-button"
+        );
+
+    const nativeShareButton =
+        document.querySelector(
+            "#native-share-button"
+        );
+
+    const whatsappButton =
+        document.querySelector(
+            "#whatsapp-share-button"
+        );
+
+
+    /*
+     * Event delegation means these handlers work for both
+     * the featured quote and Recent Thoughts created later.
+     */
+    document.addEventListener(
+        "click",
+        async (event) => {
+            const actionButton =
+                event.target.closest(
+                    "[data-quote-action]"
+                );
+
+            if (!actionButton) {
+                return;
+            }
+
+
+            const action =
+                actionButton
+                    .dataset
+                    .quoteAction;
+
+
+            /*
+             * SAVE belongs entirely to saved-thoughts.js.
+             *
+             * This module only handles COPY and SHARE.
+             */
+            if (
+                action !== "copy"
+                && action !== "share"
+            ) {
+                return;
+            }
+
+
+            const quote =
+                resolveQuoteFromAction(
+                    actionButton
+                );
+
+            if (!quote) {
+                return;
+            }
+
+
+            if (
+                action === "copy"
+            ) {
+                await copyQuote(
+                    quote,
+                    actionButton
+                );
+            }
+
+
+            if (
+                action === "share"
+            ) {
+                await openShareModal(
+                    quote
+                );
+            }
+        }
+    );
+
+
+    closeButton
+        ?.addEventListener(
+            "click",
+            () => {
+                shareDialog
+                    ?.close();
+            }
+        );
+
+
+    downloadButton
+        ?.addEventListener(
+            "click",
+            async () => {
+                const quote =
+                    shareDialog
+                        ?._quotelyQuote;
+
+                if (quote) {
+                    await downloadShareImage(
+                        quote
+                    );
+                }
+            }
+        );
+
+
+    nativeShareButton
+        ?.addEventListener(
+            "click",
+            async () => {
+                const quote =
+                    shareDialog
+                        ?._quotelyQuote;
+
+                if (quote) {
+                    await shareImageNatively(
+                        quote
+                    );
+                }
+            }
+        );
+
+
+    whatsappButton
+        ?.addEventListener(
+            "click",
+            () => {
+                const quote =
+                    shareDialog
+                        ?._quotelyQuote;
+
+                if (quote) {
+                    shareQuoteToWhatsApp(
+                        quote
+                    );
+                }
+            }
+        );
+
+
+    /*
+     * Clicking the darkened area around the modal closes it.
+     */
+    shareDialog
+        ?.addEventListener(
+            "click",
+            (event) => {
+                if (
+                    event.target
+                    === shareDialog
+                ) {
+                    shareDialog.close();
+                }
+            }
+        );
+}

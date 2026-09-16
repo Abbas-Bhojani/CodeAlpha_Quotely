@@ -1,0 +1,592 @@
+/* =========================================================
+   QUOTELY — Saved Thoughts
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   Hidden Application States
+
+   This rule is intentionally explicit.
+
+   Author CSS must never accidentally make an element with
+   the HTML "hidden" attribute visible.
+   --------------------------------------------------------- */
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   Page
+   --------------------------------------------------------- */
+
+.page--saved {
+    padding-bottom: 4rem;
+}
+
+
+/* ---------------------------------------------------------
+   Introduction
+   --------------------------------------------------------- */
+
+.saved-intro {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    align-items: end;
+
+    gap: 3rem;
+
+    padding:
+        4.5rem 0
+        2.4rem;
+
+    border-bottom:
+        1px solid var(--color-rule);
+}
+
+
+.saved-intro__copy {
+    min-width: 0;
+}
+
+
+.saved-intro__eyebrow,
+.saved-intro__count,
+.saved-message__eyebrow,
+.saved-status {
+    margin: 0;
+
+    color:
+        var(--color-metadata);
+
+    font-size: 0.66rem;
+    font-weight: 600;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+
+.saved-intro__title {
+    max-width: 47rem;
+
+    margin:
+        0.75rem 0 0;
+
+    font-family:
+        var(--font-editorial);
+
+    font-size:
+        clamp(
+            3.7rem,
+            7vw,
+            6.7rem
+        );
+
+    font-weight: 500;
+
+    line-height: 0.88;
+
+    letter-spacing: -0.025em;
+
+    overflow-wrap: anywhere;
+}
+
+
+.saved-intro__count {
+    padding-bottom: 0.6rem;
+
+    white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   Loading
+   --------------------------------------------------------- */
+
+.saved-state--loading {
+    padding:
+        3rem 0;
+
+    border-bottom:
+        1px solid var(--color-rule);
+}
+
+
+/* ---------------------------------------------------------
+   Empty + Error States
+   --------------------------------------------------------- */
+
+.saved-message {
+    display: grid;
+
+    grid-template-columns:
+        minmax(10rem, 0.42fr)
+        minmax(0, 1fr);
+
+    gap:
+        clamp(
+            2.5rem,
+            7vw,
+            7rem
+        );
+
+    padding:
+        3.5rem 0
+        4rem;
+
+    border-bottom:
+        1px solid var(--color-rule);
+}
+
+
+.saved-message__label-column,
+.saved-message__content {
+    min-width: 0;
+}
+
+
+.saved-message__eyebrow {
+    padding-top: 0.35rem;
+}
+
+
+.saved-message__content {
+    max-width: 43rem;
+}
+
+
+.saved-message__content h2 {
+    margin: 0;
+
+    font-family:
+        var(--font-editorial);
+
+    font-size:
+        clamp(
+            2.6rem,
+            5vw,
+            4.8rem
+        );
+
+    font-weight: 500;
+
+    line-height: 0.95;
+
+    letter-spacing: -0.02em;
+
+    overflow-wrap: anywhere;
+}
+
+
+.saved-message__content p {
+    max-width: 35rem;
+
+    margin:
+        1.3rem 0 0;
+
+    color:
+        var(--color-ink-secondary);
+
+    font-size: 0.9rem;
+
+    line-height: 1.7;
+}
+
+
+.saved-message__link {
+    display: inline-block;
+
+    width: fit-content;
+
+    margin-top: 1.6rem;
+
+    padding-bottom: 0.3rem;
+
+    border-bottom:
+        1px solid currentColor;
+
+    color:
+        var(--color-ink);
+
+    font-size: 0.67rem;
+    font-weight: 600;
+
+    letter-spacing: 0.11em;
+
+    text-decoration: none;
+}
+
+
+.saved-message__link:hover {
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   Saved Collection
+   ========================================================= */
+
+
+/*
+ * IMPORTANT:
+ *
+ * CSS Grid is used instead of CSS multi-columns.
+ *
+ * Each thought therefore occupies one independent grid cell.
+ * Variable quote heights cannot flow into or overlap another
+ * thought.
+ */
+
+.saved-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    align-items: stretch;
+
+    gap: 0;
+
+    width: 100%;
+
+    padding: 0;
+}
+
+
+/* ---------------------------------------------------------
+   Individual Thought
+   --------------------------------------------------------- */
+
+.saved-thought {
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+    min-height: 100%;
+
+    margin: 0;
+
+    padding:
+        2.35rem
+        2rem
+        2.35rem
+        0;
+
+    border-bottom:
+        1px solid var(--color-rule);
+
+    overflow: hidden;
+}
+
+
+.saved-thought:nth-child(even) {
+    padding-right: 0;
+
+    padding-left: 2rem;
+
+    border-left:
+        1px solid var(--color-rule);
+}
+
+
+/* ---------------------------------------------------------
+   Thought Metadata
+   --------------------------------------------------------- */
+
+.saved-thought__top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1rem;
+
+    min-width: 0;
+}
+
+
+.saved-thought__number,
+.saved-thought__category {
+    margin: 0;
+
+    color:
+        var(--color-metadata);
+
+    font-size: 0.63rem;
+    font-weight: 600;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+}
+
+
+.saved-thought__category {
+    text-align: right;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   Quote
+   --------------------------------------------------------- */
+
+.saved-thought blockquote {
+    min-width: 0;
+
+    margin: 0;
+}
+
+
+.saved-thought__quote {
+    margin:
+        2rem 0 0;
+
+    font-family:
+        var(--font-editorial);
+
+    font-size:
+        clamp(
+            2rem,
+            3.2vw,
+            3.25rem
+        );
+
+    font-weight: 500;
+
+    line-height: 1.03;
+
+    letter-spacing: -0.012em;
+
+    overflow-wrap: anywhere;
+
+    word-break: normal;
+}
+
+
+.saved-thought__author {
+    margin-top: 1.15rem;
+
+    color:
+        var(--color-ink-secondary);
+
+    font-size: 0.8rem;
+
+    font-style: normal;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   Thought Footer
+   --------------------------------------------------------- */
+
+.saved-thought__bottom {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 1.25rem;
+
+    width: 100%;
+
+    margin-top: auto;
+
+    padding-top: 2.3rem;
+}
+
+
+.saved-thought__actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap:
+        0.8rem 1.25rem;
+
+    min-width: 0;
+}
+
+
+.saved-thought__action {
+    appearance: none;
+
+    padding: 0;
+
+    border: 0;
+
+    background:
+        transparent;
+
+    color:
+        var(--color-ink);
+
+    font: inherit;
+
+    font-size: 0.64rem;
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+
+    cursor: pointer;
+}
+
+
+.saved-thought__action:hover {
+    text-decoration: underline;
+
+    text-underline-offset: 0.28rem;
+}
+
+
+.saved-thought__action:focus-visible {
+    outline:
+        1px solid var(--color-ink);
+
+    outline-offset: 0.3rem;
+}
+
+
+.saved-thought__action:disabled {
+    cursor: wait;
+
+    opacity: 0.45;
+}
+
+
+.saved-thought__date {
+    flex-shrink: 0;
+
+    margin: 0;
+
+    color:
+        var(--color-metadata);
+
+    font-size: 0.6rem;
+
+    letter-spacing: 0.07em;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (
+    max-width: 48rem
+) {
+
+    .saved-intro {
+        grid-template-columns:
+            1fr;
+
+        gap: 1.5rem;
+
+        padding-top: 3rem;
+    }
+
+
+    .saved-intro__count {
+        padding-bottom: 0;
+    }
+
+
+    .saved-message {
+        grid-template-columns:
+            1fr;
+
+        gap: 1rem;
+
+        padding:
+            3rem 0;
+    }
+
+
+    .saved-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .saved-thought,
+    .saved-thought:nth-child(even) {
+        padding:
+            2.2rem 0;
+
+        border-left: 0;
+    }
+}
+
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (
+    max-width: 32rem
+) {
+
+    .page--saved {
+        padding-bottom: 2rem;
+    }
+
+
+    .saved-intro__title {
+        font-size:
+            clamp(
+                3.1rem,
+                16vw,
+                4.6rem
+            );
+
+        line-height: 0.92;
+    }
+
+
+    .saved-thought__quote {
+        font-size:
+            clamp(
+                2rem,
+                10vw,
+                2.8rem
+            );
+    }
+
+
+    .saved-thought__bottom {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 1.15rem;
+    }
+
+
+    .saved-thought__date {
+        text-align: left;
+    }
+
+
+    .saved-thought__actions {
+        gap:
+            1rem 1.3rem;
+    }
+}
