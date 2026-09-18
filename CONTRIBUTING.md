@@ -1,7 +1,3 @@
-
-### 4. Replace `CONTRIBUTING.md`
-
-```md
 # Contributing to QUOTELY
 
 Thank you for considering contributing to QUOTELY.
